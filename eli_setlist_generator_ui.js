@@ -6,15 +6,28 @@ $(document).ready(function() {
         songsJson.val(songsJsonCookie);
         songsJson.change();
     }
-    songsJson.change(function(event) { $.cookie("esgsongs", event.target.value);});
+    songsJson.change(function(event) {
+	var songs = $.parseJSON(songsJson.val());
+	$("#numSongs").val(Object.keys(songs).length);
+	$("#namesOfSongs").val(Object.keys(songs).sort().join("\n"));
+    });
     var randFunc = function(n) { return Math.floor(Math.random()*n); };
     $("#genSetlist").click(function(event) {
         try {
             var songs = $.parseJSON(songsJson.val());
-            var setlist = generateSetlist(songs,songs.keys.length, randFunc);
-            $.each(setlist, function(n, song) { $("#results").append("<p>"+song+"</p>"); });
+            var setlist = generateSetlist(songs,$("#numSongs").val(), randFunc);
+	    $("#results").text("");
+            $.each(setlist, function(n, song) { $("#results").append(song+"<br/>"); });
         } catch(err) {
             $("#results").text(err.toString());
         }
     });
+    
+    songsJson.text(JSON.stringify({
+	    firsty: ['secondy', 'fourthy'], 
+	    secondy: ['thirdy'],
+	    thirdy: ['fourthy'],
+	    fourthy: ['secondy']
+	}));
+    songsJson.change();
 });
