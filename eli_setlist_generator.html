@@ -1,0 +1,30 @@
+<html>
+  <head>
+    <title>Eli's Setlist Generator</title>
+    <script type="text/javascript" src="http://code.jquery.com/jquery-1.5.1.min.js"></script>
+    <script type="text/javascript" src="jquery.cookie.js"></script>
+    <script type="text/javascript">
+      $(document).ready(function() {
+        var songsJson = $("#songsJson");
+        var songsJsonCookie = $.cookie("esgsongs");
+        if (songsJsonCookie !== null) {
+          alert(songsJsonCookie);
+          songsJson.val(songsJsonCookie);
+          songsJson.change();
+        }
+        songsJson.change(function(event) { $.cookie("esgsongs", event.target.value);});
+      });
+    </script>
+  </head>
+  <body>
+    <table>
+      <tr valign="top">
+	<td>Names of the songs:</td><td><textarea rows="20" id="namesOfSongs"></textarea></td>
+      </tr>
+      <tr valign="top">
+	<td>Song and Transitions Code:</td><td><textarea rows="20" id="songsJson"></textarea></td>
+      </tr>
+    </table>
+    <script type="text/javascript" src="eli_setlist_generator.js"></script>
+  </body>
+</html>
