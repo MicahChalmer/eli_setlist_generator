@@ -1,16 +1,20 @@
 $(document).ready(function() {
     var songsJson = $("#songsJson");
-    var songsJsonCookie = $.cookie("esgsongs");
-    if (songsJsonCookie !== null) {
-        alert(songsJsonCookie);
-        songsJson.val(songsJsonCookie);
-        songsJson.change();
-    }
+
+    // When the songs & transitions changes...
     songsJson.change(function(event) {
-	var songs = $.parseJSON(songsJson.val());
-	$("#numSongs").val(Object.keys(songs).length);
-	$("#namesOfSongs").val(Object.keys(songs).sort().join("\n"));
+	var sjv = songsJson.val();
+	$.cookie("esgsongs",sjv);
+	var songs = $.parseJSON(sjv);
+	if (songs !== null) {
+	    $("#numSongs").val(Object.keys(songs).length);
+	    $("#namesOfSongs").val(Object.keys(songs).sort().join("\n"));
+	} else {
+	    $("#numSongs").val("");
+	    $("#namesOfSongs").val("");
+	}
     });
+
     var randFunc = function(n) { return Math.floor(Math.random()*n); };
     $("#genSetlist").click(function(event) {
         try {
@@ -23,11 +27,18 @@ $(document).ready(function() {
         }
     });
     
-    songsJson.text(JSON.stringify({
+    var songsJsonCookie = $.cookie("esgsongs");
+    if (songsJsonCookie !== null && songsJsonCookie !== "") {
+        songsJson.val(songsJsonCookie);
+        songsJson.change();
+    } else {
+	songsJson.val(JSON.stringify({
 	    firsty: ['secondy', 'fourthy'], 
 	    secondy: ['thirdy'],
 	    thirdy: ['fourthy'],
 	    fourthy: ['secondy']
-	}));
-    songsJson.change();
+	}, null, "  "));
+	songsJson.change();
+    }
+
 });

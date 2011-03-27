@@ -1,13 +1,21 @@
+var checkUntouched = function(desc, songsFunc, actualTest) {
+    describe(desc, function() {
+	var songs = songsFunc();
+	
+	it("actual test", function() { actualTest.call(this, songs) });
+	it("Should not have modified the songs during the test", function() { expect(songs).toEqual(songsFunc()); });
+    });
+};
+
+
+
 describe("Setlist generator specs", function() {
-    var checkGSLUntouched = function(desc, songsFunc, numSongs, randGen, expectedSetlist) {
-	describe(desc, function() {
-	    var songs = songsFunc();
-	    var setList = generateSetlist(songs, numSongs, randGen);
-	    it("actual test", function() { expect(setList).toEqual(expectedSetlist); });
-	    it("Should not have modified the songs during the test", function() { expect(songs).toEqual(songsFunc()); });
+    var checkGSLUntouched = function(desc, songsFunc, numSongs, randGen, expectedSetlist) { 
+	return checkUntouched(desc, songsFunc, function(songs) {
+	    expect(generateSetlist(songs, numSongs, randGen)).toEqual(expectedSetlist);
 	});
     };
-
+    
     describe("Three songs linear", function() {
 	var threeSongsLinear = function() { return {
 	    firsty: ['secondy'],
@@ -101,5 +109,46 @@ describe("Setlist generator specs", function() {
 			  4,
 			  function(n) { return 3 % n; },
 			  ['firsty','fourthy','secondy','thirdy']);
+    });
+});
+
+describe("Handling changes to the list of songs", function() {
+    var threeSongsLinear = function() { return {
+	firsty: ['secondy'],
+	secondy: ['thirdy'],
+	thirdy: ['firsty']
+    }; };
+    
+    checkUntouched("Handles the same list it already has", threeSongsLinear, function(songs) {
+	expect(changeSongNameList(songs, ["secondy","firsty","thirdy"])).toEqual(threeSongsLinear());
+    });
+
+    checkUntouched("Handles adding a song to the list", threeSongsLinear, function(songs) {
+	expect(changeSongNameList(songs, ["firsty","secondy","thirdy","fourthy"])).toEqual({
+	    firsty: ['secondy'],
+	    secondy: ['thirdy'],
+	    thirdy: ['firsty'],
+	    fourthy: []
+	});
+    });
+
+    checkUntouched("Handles removing a song from the list", threeSongsLinear, function(songs) {
+	expect(changeSongNameList(songs, ["firsty","thirdy"])).toEqual({
+	    firsty: [],
+	    thirdy: ['firsty']
+	});
+    });
+
+    checkUntouched("Handles both adding and removing", threeSongsLinear, function(songs) {
+	expect(changeSongNameList(songs, ["firsty","secondy","thirdy","fourthy"])).toEqual({
+	    firsty: ['secondy'],
+	    secondy: ['thirdy'],
+	    thirdy: ['firsty'],
+	    fourthy: []
+	});
+    });
+
+    checkUntouched("Handles an empty list", threeSongsLinear, function(songs) {
+	expect(changeSongNameList(songs, [])).toBeUndefined();
     });
 });

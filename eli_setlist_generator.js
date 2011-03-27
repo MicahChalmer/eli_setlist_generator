@@ -1,4 +1,5 @@
-// Via Andy E at http://stackoverflow.com/questions/208016/how-to-list-the-properties-of-a-javascript-object/3937321#3937321
+// Backfill Object.keys for browsers that don't already have it.
+// Copied from Andy E at http://stackoverflow.com/questions/208016/how-to-list-the-properties-of-a-javascript-object/3937321#3937321
 Object.keys = Object.keys || (function () {
     var hasOwnProperty = Object.prototype.hasOwnProperty,
         hasDontEnumBug = !{toString:null}.propertyIsEnumerable("toString"),
@@ -94,3 +95,33 @@ function generateSetlist(songs, numSongs, randGen) {
     );
 }
 
+// The idea here is to make the minimal changes necessary to change the list of song names in a songs/transitions object
+// suitable for generateSetlist.  I.e. if there is a song in the list not in the current one, add it with an empty transitions list.
+// For any songs in the object not in the new list, remove it from the main object and from all transitions lists.
+// Leave all other songs and transitions as they are.  If the song name list is empty, return undefined
+// This should return a brand new object and not change the one passed in
+function changeSongNameList(oldSongs, newSongNames) {
+    var nsnl=newSongNames.length;
+    if (nsnl == 0) {
+	return undefined;
+    }
+
+    var curNames = Object.keys(oldSongs);
+    var cnl = curNames.length;
+    var result = {};
+    for(var i=0; i<cnl; ++i) {
+	var oldName = curNames[i];
+	if (contains(newSongNames,oldName)) {
+	    result[oldName] = filter(oldSongs[oldName], function(song) { return contains(newSongNames,song); });
+	}
+    }
+
+    for(var i=0; i<nsnl; ++i) {
+	var newSong = newSongNames[i];
+	if (!oldSongs.hasOwnProperty(newSong)) {
+	    result[newSong] = [];
+	}
+    }
+
+    return result;
+}
