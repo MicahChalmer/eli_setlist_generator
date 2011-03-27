@@ -110,6 +110,38 @@ describe("Setlist generator specs", function() {
 			  function(n) { return 3 % n; },
 			  ['firsty','fourthy','secondy','thirdy']);
     });
+
+    describe("6-song path", function() {
+	var sixSongList = function()  { return {
+	    "firsty": [
+		"fourthy"
+	    ],
+	    "thirdy": [
+		"fourthy"
+	    ],
+	    "fourthy": [
+		"firsty"
+	    ],
+	    "fifthy": [
+		"chumba"
+	    ],
+	    "afafa": [
+		"firsty"
+	    ],
+	    "chumba": [
+		"afafa"
+	    ]
+	}; }
+	
+	var incr=0;
+	var randFunc = function(n) { return (++incr) % n; }
+	checkGSLUntouched("Fail to find a six-song path",
+			  sixSongList,
+			  6,
+			  randFunc,
+			  undefined);
+    });
+
 });
 
 describe("Handling changes to the list of songs", function() {

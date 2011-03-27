@@ -2,7 +2,7 @@
   <head>
     <title>Eli's Setlist Generator</title>
     <script type="text/javascript" src="http://code.jquery.com/jquery-1.5.1.min.js"></script>
-    <script type="text/javascript" src="jquery.cookie.js"></script>
+    <script type="text/javascript" src="thirdparty/jquery_plugins/jquery.cookie.js"></script>
     <script type="text/javascript" src="eli_setlist_generator_ui.js"></script>
   </head>
   <body>
@@ -14,7 +14,7 @@
 	<td>Song and Transitions Code:</td><td><textarea rows="20" id="songsJson"></textarea></td>
       </tr>
     </table>
-    <button id="genSetlist">Generate Setlist</button> (of length <input type="text" id="numSongs"></input>)
+    <button id="genSetlist">Generate Setlist</button> (of <input type="text" size="2" id="numSongs"></input> songs)
     <div id="results"></div>
     <script type="text/javascript" src="eli_setlist_generator.js"></script>
   </body>

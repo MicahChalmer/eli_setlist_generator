@@ -1,3 +1,33 @@
+//
+// Basic array functions that javascript annoyingly doesn't have
+//
+
+// a is an array.  Return an array of the elements of a for which f returns true
+var filter = function(a,f) {
+    var r = [];
+    var l = a.length;
+    for(var i=0; i<l; ++i) {
+	var e = a[i];
+	if (f(e)) {
+	    r.push(e);
+	}
+    }
+    return r;
+};
+
+// Return a shallow copy of the array a
+var arrayClone = function(a) { return filter(a,function() {return true;}); };
+
+// Returns true if the value e is somewhere in the array a
+var contains = function(a,e) {
+    var l = a.length;
+    for(var i=0; i<l; ++i) {
+	if (a[i] == e)
+	    return true;
+    }
+    return false;
+}
+
 // Backfill Object.keys for browsers that don't already have it.
 // Copied from Andy E at http://stackoverflow.com/questions/208016/how-to-list-the-properties-of-a-javascript-object/3937321#3937321
 Object.keys = Object.keys || (function () {
@@ -35,29 +65,9 @@ Object.keys = Object.keys || (function () {
     };
 })();
 
-// a is an array.  Return an array of the elements of a for which f returns true
-var filter = function(a,f) {
-    var r = [];
-    var l = a.length;
-    for(var i=0; i<l; ++i) {
-	var e = a[i];
-	if (f(e)) {
-	    r.push(e);
-	}
-    }
-    return r;
-};
-
-var arrayClone = function(a) { return filter(a,function() {return true;}); };
-
-var contains = function(a,e) {
-    var l = a.length;
-    for(var i=0; i<l; ++i) {
-	if (a[i] == e)
-	    return true;
-    }
-    return false;
-}
+//
+// The "meat" functions are below
+//
 
 // songs is an object { song name: [ list of songs it can segue to ] }
 // numSongs is how many songs you want in the setlist
