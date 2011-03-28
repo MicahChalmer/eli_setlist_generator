@@ -116,7 +116,7 @@ function changeSongNameList(oldSongs, newSongNames) {
 	return undefined;
     }
 
-    var curNames = Object.keys(oldSongs);
+    var curNames = (oldSongs ? Object.keys(oldSongs) : []);
     var cnl = curNames.length;
     var result = {};
     for(var i=0; i<cnl; ++i) {
@@ -128,7 +128,7 @@ function changeSongNameList(oldSongs, newSongNames) {
 
     for(var i=0; i<nsnl; ++i) {
 	var newSong = newSongNames[i];
-	if (!oldSongs.hasOwnProperty(newSong)) {
+	if (!oldSongs || !Object.prototype.hasOwnProperty.call(oldSongs,newSong)) {
 	    result[newSong] = [];
 	}
     }

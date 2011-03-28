@@ -183,4 +183,6 @@ describe("Handling changes to the list of songs", function() {
     checkUntouched("Handles an empty list", threeSongsLinear, function(songs) {
 	expect(changeSongNameList(songs, [])).toBeUndefined();
     });
+
+    it("Handles if the old song list is undefined", function() { expect(changeSongNameList(undefined, ["foo","bar"])).toEqual({foo: [], bar: []}); });
 });

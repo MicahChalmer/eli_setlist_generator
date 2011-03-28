@@ -1,0 +1,26 @@
+.leftcol {
+    width: auto;
+    float: left;
+}
+
+.btil {
+    margin-bottom: 2em;
+    padding-right: 1em;
+}
+
+#instructions {
+    margin-left: 1em;
+    padding-left: 1em;
+}
+
+#tableWrapper {
+    margin-bottom: 2em;
+}
+
+.fromHeader {
+    background-color: #FFEEBB;
+}
+
+.toHeader {
+    background-color: #BBEEFF;
+}

@@ -3,19 +3,39 @@
     <title>Eli's Setlist Generator</title>
     <script type="text/javascript" src="http://code.jquery.com/jquery-1.5.1.min.js"></script>
     <script type="text/javascript" src="thirdparty/jquery_plugins/jquery.cookie.js"></script>
+    <script type="text/javascript" src="thirdparty/json2.js"></script>
+    <script type="text/javascript" src="eli_setlist_generator.js"></script>
     <script type="text/javascript" src="eli_setlist_generator_ui.js"></script>
+    <link type="text/css" href="eli_setlist_generator.css" rel="stylesheet"></link>
   </head>
   <body>
-    <table>
-      <tr valign="top">
-	<td>Names of the songs:</td><td><textarea rows="20" id="namesOfSongs"></textarea></td>
-      </tr>
-      <tr valign="top">
-	<td>Song and Transitions Code:</td><td><textarea rows="20" id="songsJson"></textarea></td>
-      </tr>
-    </table>
-    <button id="genSetlist">Generate Setlist</button> (of <input type="text" size="2" id="numSongs"></input> songs)
-    <div id="results"></div>
-    <script type="text/javascript" src="eli_setlist_generator.js"></script>
+    <div id="instructions">
+      <div style="font-weight: bold">How to use:</div>
+      <ul>
+	<li>Put the names of the songs in the box labeled "names of the songs." </li>
+	<li>Use the checkboxes to select which songs can transition into which</li>
+	<li>Click "Generate Setlist" to generate a random setlist using only the allowed transitions</li>
+	<li>The songs and all the transitions are encoded into JSON format in the box labeled "songs and transitions JSON code."  You can copy it out of there and save it somewhere else.  To restore what you had on the page, paste the code back into the "songs and transitions JSON code" box."  (Yeah, I know that isn't particularly friendly, but this is about as far as I felt like going.  Maybe later I'll make another version with something friendlier.  Or maybe not.)</li>
+      </ul>
+    </div>
+    <hr/>
+    <div class="leftcol">
+      <div class="btil">
+	<div class="label">Names of the songs:</div>
+	<textarea rows="20" id="namesOfSongs" class="bigTextInput"></textarea>
+      </div>
+      <div class="btil">
+	<div class="label">Song and Transitions JSON Code:</div>
+	<textarea rows="20" id="songsJson"></textarea>
+      </div>
+    </div>
+    <div id="tableWrapper">
+      <table id="checkerTable">
+      </table>
+    </div>
+    <div class="resultsDiv">
+      <button id="genSetlist">Generate Setlist</button> (of <input type="text" size="2" id="numSongs"></input> songs)
+      <div id="results"></div>
+    </div>
   </body>
 </html>
