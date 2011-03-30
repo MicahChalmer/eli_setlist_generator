@@ -42,19 +42,26 @@ $(document).ready(function() {
 	    }
 	    songRow.append($('<td>').addClass("fromHeader").append(songNames[i]));
 	    for(var j=0; j<numSongs; ++j) {
-		var transCB = $('<input type="checkbox">');
-		var toSong = songNames[j];
-		var fromSong = songNames[i];
-		transCB.change({from: fromSong, to: toSong, all: songNames},handleTransitionCheckbox);
-		songRow.append($('<td>').append(transCB));
-		if ($.inArray(toSong, songs[fromSong]) != -1) { 
-		    transCB.attr('checked', 'checked'); 
+		var cellTd = $('<td>');
+		if (j != i) {
+		    var transCB = $('<input type="checkbox">');
+		    var toSong = songNames[j];
+		    var fromSong = songNames[i];
+		    transCB.change({from: fromSong, to: toSong, all: songNames},handleTransitionCheckbox);
+		
+		    cellTd.append(transCB);
+		    if ($.inArray(toSong, songs[fromSong]) != -1) { 
+			transCB.attr('checked', 'checked'); 
+		    }
+		} else {
+		    cellTd.append('&nbsp;');
 		}
+		songRow.append(cellTd);
 	    }
 	}
 	
 	tableWrapper.append(checkerTable);
-    }
+    };
 
     var setSongs = function(songs, songNames) {
 	if (songs) {
@@ -71,7 +78,7 @@ $(document).ready(function() {
 	    $.cookie("esgsongs",null);
 	}
 	$("#results").empty();
-    }
+    };
 
     // When the songs & transitions changes...
     songsJsonBox.change(function(event) {
@@ -85,7 +92,7 @@ $(document).ready(function() {
 	setSongs(songs, (songs ? Object.keys(songs) : []));
     });
 
-    var trim = function(s) { return s.replace(/^\s+|\s+$/g,""); }
+    var trim = function(s) { return s.replace(/^\s+|\s+$/g,""); };
 
     namesOfSongsBox.change(function(event) {
 	var songNames = filter(namesOfSongsBox.val().split("\n"), function(s) { return trim(s) != ""; });
