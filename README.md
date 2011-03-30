@@ -1,7 +1,7 @@
 Eli's Setlist Generator
 =======================
 
-My brother Eli, and his band Durians, wanted a way to generate set lists for their gigs.  They play without interruption between songs, but they don't have smooth transitions for every possible pair of songs.  So Eli wanted a way to generate a random set list using only the transitions they can play smoothly.  I decided to give him one, and here it is.
+My brother Eli, and his band [Durians](http://www.myspace.com/duriansmusic), wanted a way to generate set lists for their gigs.  They play without interruption between songs, but they don't have smooth transitions for every possible pair of songs.  So Eli wanted a way to generate a random set list using only the transitions they can play smoothly.  I decided to give him one, and here it is.
 
 There is no server side component at all--just static HTML and javascript that runs in your browser.  There is also no "build"--the source is laid out exactly as it sits on the server.
 
